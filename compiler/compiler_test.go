@@ -91,32 +91,33 @@ func concatInstructions(s []code.Instructions) code.Instructions {
 }
 
 func testConstants(t *testing.T, expected []interface{}, actual []object.Object) error {
-    if len(expected) != len(actual) {
-        return fmt.Errorf("wrong number of constants, got=%d, want=%d", len(actual), len(expected))
-    }
+	if len(expected) != len(actual) {
+		return fmt.Errorf("wrong number of constants, got=%d, want=%d", len(actual), len(expected))
+	}
 
-    for i, constant := range expected {
-        switch constant := constant.(type) {
-        case int:
-            err := testIntegerObject(int64(constant), actual[i])
-            if err != nil {
-                return fmt.Errorf("constant %d - testIntegerObject failed: %s", i, err)
-            }
-        }
-    }
+	for i, constant := range expected {
+		switch constant := constant.(type) {
+		case int:
+			err := testIntegerObject(int64(constant), actual[i])
+			if err != nil {
+				return fmt.Errorf("constant %d - testIntegerObject failed: %s", i, err)
+			}
+		}
+	}
 
-    return nil
+	return nil
 }
 
 func testIntegerObject(expected int64, actual object.Object) error {
-    result, ok := actual.(*object.Integer)
-    if !ok {
-        return fmt.Errorf("object is not Integer. got=%T (%+v)", actual, actual)
-    }
+	result, ok := actual.(*object.Integer)
+	if !ok {
+		return fmt.Errorf("object is not Integer. got=%T (%+v)", actual, actual)
+	}
 
-    if result.Value != expected {
-        return fmt.Errorf("object has wrong value. got=%d, want=%d", result.Value, expected)
-    }
+	if result.Value != expected {
+		return fmt.Errorf("object has wrong value. got=%d, want=%d", result.Value, expected)
+	}
 
-    return nil
+	return nil
 }
+
